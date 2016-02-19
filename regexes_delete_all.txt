@@ -1,0 +1,4 @@
+#commencer la ligne par caractere diese pour commenter
+^Ansaldo.+$
+^DOSSIER DE .+$
+^SEI_TVM300 -.+$
