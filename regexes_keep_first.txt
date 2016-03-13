@@ -39,3 +39,6 @@
 ^(\|\s*)*POINTS\sCARACTERISTIQUES(\s*\|).*$
 ^(\|\s*)*IDENTIFICATEURS(\s*\|).*$
 ^(\|\s*)*SIGNAUX\sRENCONTRES(\s*\|).*$
+^(\|\s*)NUM\sETAT\sCAP(\s*\|).*$
+^(\|\s*)PS\sFICTIFS(\s*\|).*$
+^(\|\s*)CODE\s\(en.*$
