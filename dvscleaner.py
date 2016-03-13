@@ -27,14 +27,16 @@ def init():
             regexes_keep_first.append(line)
     regfile.close()
 
-# recherche des fichiers présents dans un répertoire par expression régulière
+# recherche des fichiers présents dans un répertoire par expression régulière avec option IGNORECASE
+# which : expression régulière our identifier les fichiers à récupérer
+# where : dossier source
 def findfiles(which, where='.'):
     rule = compile(translate(which), IGNORECASE)
     return [name for name in listdir(where) if rule.match(name)]
 
 #copie le contenu de source vers destination sauf les lignes qui match une des regex
 def filtrer(source_file, destination_file):
-    #open destination_file to copy source in it and work with regex from the begining of the file
+    #open destination_file to copy source in it and work with regex from the begining of the file. do not copy any occurence that match regexes_delete_all.
     source = open(source_file, "r")
     out = source.readlines()
     source.close()
@@ -42,7 +44,7 @@ def filtrer(source_file, destination_file):
         combined_regex = "(" + ")|(".join(regexes_delete_all) + ")"
         if (match( combined_regex, out[line])) : out[line] = ''
 #    print out
-    #reopen destination_file to work with regex from the begining of the file
+    #reopen destination_file to work with regex from the begining of the file. do not copy any occurence that match regexes_keep_first except the first occurence.
     for regex in regexes_keep_first:
         first_occ = True
         for line in range(len(out)):
@@ -69,7 +71,7 @@ def main_function(sourcedir):
         source_file = path.join(sourcedir, path.basename(file))
         destination_file = path.join(destdir, path.basename(file))
         filtrer(source_file, destination_file)
-#copy .pre & .del in dest dir
+#copy file ".pre" without any modification in dest dir
     otherfiles = findfiles('*.pre*', sourcedir)
     for file in otherfiles:
         copy2(path.join(sourcedir, path.basename(file)), path.join(destdir, path.basename(file)))
